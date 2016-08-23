@@ -87,8 +87,7 @@ generating *fake* targets (not included in this distribution due to copyright).
 
 ## How to Use
 
-* Start the ariborne system using one of the script inside
-  ```airborne/scripts```
+* Start the ariborne system using one of the script inside ```airborne/scripts```
 * Start the ground system using the scripts in ```ground/scripts```
 
 ## License
