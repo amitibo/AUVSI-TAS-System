@@ -48,7 +48,7 @@ installed:
 * **aggdraw** - Install from source (preferably from svn) set the
   variable FREETYPE_ROOT = "/usr/" in the setup.py file.
 * **PIL**
-* **exifread **- Install with ```pip install exifread```
+* **exifread**- Install with ```pip install exifread```
 * **pyqrcode** - Install with ```pip install pyqrcode```
 * **pypng** - Install with ```pip install pypng```
 
