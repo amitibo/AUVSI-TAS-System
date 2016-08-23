@@ -7,9 +7,11 @@ The sofware was developed and used by the TAS team during the
 [2015](http://www.auvsi-suas.org/competitions/2015/) and 
 [2016](http://www.auvsi-suas.org/competitions/2016/) competitions.
 The software is made of three sub-projects:
-- The software of the airborne computer.
-- The software that runs on the ground station.
-- Image processing algorithms.
+
+  * The software of the airborne computer.
+  * The software that runs on the ground station.
+  * Image processing algorithms.
+
 Both the airborne and ground station software make use of the image processing
 sub-project.
 The software is written completely in python.
