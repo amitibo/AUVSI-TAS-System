@@ -1,0 +1,315 @@
+#: import ListItemButton kivy.uix.listview.ListItemButton
+#: import ListAdapter kivy.adapters.listadapter.ListAdapter
+#: import resource_filename pkg_resources.resource_filename
+
+ImageProcessingGui:
+
+#
+# Main GUI window.
+#
+<ImageProcessingGui>:
+    orientation: "vertical"
+    connect_label: connect_label_id
+    images_gallery: images_gallery_id
+    crops_gallery: crops_gallery_id
+    screen_manager: sm
+
+    #
+    # Top buttons menu
+    #
+    BoxLayout:
+        height: "20dp"
+        width: "750dp"
+        size_hint: None, None
+        pos_hint: {"right": 1}
+
+        Button:
+            text: 'Images'
+            on_release: sm.current = 'images'
+
+        Button:
+            text: 'Crops'
+            on_release: sm.current = 'crops'
+
+        #Button:
+        #    text: 'IMU Calib'
+        #    on_release: app.calibrateIMU()
+
+        BGLabel:
+            id: connect_label_id
+            text: 'Disconnected'
+
+        Button:
+            text: 'Settings'
+            on_release: app.open_settings()
+
+        Button:
+            text: 'Keyboard'
+            on_release: app.capture_keyboard()
+
+    ScreenManager:
+        id: sm
+
+        Screen:
+            name: 'images'
+
+            #
+            # Image gallery widget.
+            #
+            ImagesGalleryWin:
+                id: images_gallery_id
+
+        Screen:
+            name: 'crops'
+
+            #
+            # Crops gallery widget.
+            #
+            CropsGalleryWin:
+                id: crops_gallery_id
+
+
+#
+# A label class with bg color
+#
+<BGLabel>:
+    canvas.before:
+        Color:
+            rgb: 1, 0, 0
+
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+
+#
+# Widget for displaying downloaded images.
+#
+<ImagesGalleryWin>
+    scatter_image: image
+    stacked_layout: sl
+    scroll_view: sv
+    image_name: image_name
+    target_coords_degrees: tc_degrees
+    target_coords_fp: tc_fp
+    btn_shoot: btn_shoot
+    btn_download: btn_download
+
+    BoxLayout:
+        orientation: "vertical"
+        width: 430
+        size_hint_x: None
+        spacing: 10
+
+        #
+        # Tyto Logo
+        #
+        BoxLayout:
+            height: 100
+            size_hint_y: None
+            pos_hint: {"center_x": 0.5}
+
+            Image:
+                source: resource_filename('AUVSIground', 'resources/athene_logo_transparent.png')
+                keep_ratio: True
+
+        BoxLayout:
+            orientation: "horizontal"
+            height: "40dp"
+            size_hint_y: None
+
+            TextInput:
+                id: image_name
+                text: "<Current Image>"
+                multiline: False
+                readonly: True
+                size_hint_y: None
+                use_bubble: True
+                height: "40dp"
+                font_size: 20
+                padding: [5, (self.height-self.line_height)/2]
+
+            Button:
+                text: ' '
+                height: "40dp"
+                width: "40dp"
+                size_hint_x: None
+                on_release: app.focusCurrentImage()
+
+        #
+        # View of all images
+        #
+        ScrollView:
+            id: sv
+            pos_hint: {"center_x": 0.5}
+            scroll_type: ['bars', 'content']
+            bar_width: '10dp'
+
+            StackLayout:
+                id: sl
+                spacing: 5
+                height: self.minimum_height
+                size_hint_y: None
+
+        TextInput:
+            id: tc_degrees
+            text: "<Last Target Coords>"
+            multiline: False
+            readonly: True
+            size_hint_y: None
+            use_bubble: True
+            height: "40dp"
+            font_size: 20
+            padding: [5, (self.height-self.line_height)/2]
+
+        TextInput:
+            id: tc_fp
+            text: "<Last Target Coords>"
+            multiline: False
+            readonly: True
+            size_hint_y: None
+            use_bubble: True
+            height: "40dp"
+            font_size: 20
+            padding: [5, (self.height-self.line_height)/2]
+
+        BoxLayout:
+            orientation: "horizontal"
+            height: "20dp"
+            size_hint_y: None
+
+            ToggleButton:
+                id: btn_shoot
+                text: 'Shoot'
+                on_state: app.shoot(self.state == 'down')
+
+            ToggleButton:
+                id: btn_download
+                text: 'Download'
+                on_state: app.downloadImages(self.state == 'down')
+
+            Button:
+                text: 'New Mission'
+                on_release: app.newMission()
+
+
+    #
+    # Image analysis window
+    #
+    BoxStencil:
+
+        RelativeLayout:
+            id: rl
+
+            ScatterStencil:
+                id: scatter
+                size_hint: None, None
+                size: rl.size
+                do_rotation: False
+                auto_bring_to_front: False
+
+                TouchAsyncImage:
+                    id: image
+                    size: scatter.size
+                    source: resource_filename('AUVSIground', 'resources/ATHENE.jpg')
+
+
+#
+# Widget for displaying crops.
+#
+<CropsGalleryWin>
+    scatter_image: image
+    stacked_layout: sl
+    target_coords_degrees: tc_degrees
+    target_coords_fp: tc_fp
+    qr_text: qr_text
+
+    BoxLayout:
+        orientation: "vertical"
+        width: 430
+        size_hint_x: None
+        spacing: 10
+
+        #
+        # View of all crops
+        #
+        ScrollView:
+            id: sv
+            pos_hint: {"center_x": 0.5}
+
+            StackLayout:
+                id: sl
+                spacing: 5
+                height: self.minimum_height
+                size_hint_y: None
+
+        Button:
+            id: btn_orig_img
+            text: "Show original"
+            size_hint_y: None
+            use_bubble: True
+            height: "40dp"
+            on_release: app.showOriginalImage()
+            font_size: 20
+
+        TextInput:
+            id: tc_degrees
+            text: "<Last Target Coords>"
+            multiline: False
+            readonly: True
+            size_hint_y: None
+            use_bubble: True
+            height: "40dp"
+            font_size: 20
+            padding: [5, (self.height-self.line_height)/2]
+
+        TextInput:
+            id: tc_fp
+            text: "<Last Target Coords>"
+            multiline: False
+            readonly: True
+            size_hint_y: None
+            use_bubble: True
+            height: "40dp"
+            font_size: 20
+            padding: [5, (self.height-self.line_height)/2]
+
+        Button:
+            id: qr_button
+            text: "Decode QR"
+            size_hint_y: None
+            use_bubble: True
+            height: "40dp"
+            on_release: app.QR_Decode()
+            font_size: 20
+
+        TextInput:
+            id: qr_text
+            text: "Press to decode QR"
+            readonly: True
+            size_hint_y: None
+            use_bubble: True
+            height: "40dp"
+            font_size: 20
+            padding: [5, (self.height-self.line_height)/2]
+
+    #
+    # Image analysis window
+    #
+    BoxStencil:
+        size_hint_x: 2
+
+        RelativeLayout:
+            id: rl
+
+            ScatterStencil:
+                id: scatter
+                size_hint: None, None
+                size: rl.size
+                do_rotation: False
+                auto_bring_to_front: False
+
+                CropImage:
+                    id: image
+                    size: scatter.size
+                    source: resource_filename('AUVSIground', 'resources/ATHENE_closeup.jpg')

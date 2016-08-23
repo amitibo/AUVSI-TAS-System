@@ -1,0 +1,571 @@
+#: import ListItemButton kivy.uix.listview.ListItemButton
+#: import ListAdapter kivy.adapters.listadapter.ListAdapter
+#: import resource_filename pkg_resources.resource_filename
+#: import Button kivy.uix.button.Button
+
+TargetsGui:
+
+#
+# Main GUI window.
+#
+<TargetsGui>:
+    orientation: "vertical"
+    connect_label: connect_label_id
+    layout: targets
+    crops: targets.crops
+    targets: targets.targets
+    props: targets.props
+
+    #
+    # Top buttons menu
+    #
+    BoxLayout:
+        height: "20dp"
+        width: "600dp"
+        size_hint: None, None
+        pos_hint: {"right": 1}
+
+        BGLabel:
+            id: connect_label_id
+            text: 'Disconnected'
+
+        Button:
+            text: 'Settings'
+            on_release: app.open_settings()
+
+    TargetsLayout:
+        id: targets
+
+
+#
+# A label class with bg color
+#
+<BGLabel>:
+    canvas.before:
+        Color:
+            rgb: 1, 0, 0
+
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+
+#
+# Target
+#
+<Target>:
+    height: 300
+    size_hint_y: None
+    pos_hint: {"center_x": 0.5}
+    orientation: 'vertical'
+    target_image: target_image
+
+    Image:
+        size_hint_y: 1
+        id: target_image
+        keep_ratio: True
+
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint_y: 1.5
+
+        LblTxt:
+            id: targt_shape
+            lblTxtIn: 'Shape'
+
+        LblTxt:
+            id: targt_shape
+            lblTxtIn: 'BG color'
+
+        LblTxt:
+            id: targt_shape
+            lblTxtIn: 'Orient.'
+
+        LblTxt:
+            id: targt_shape
+            lblTxtIn: 'Alpha'
+
+        LblTxt:
+            id: targt_shape
+            lblTxtIn: 'Alpha color'
+
+        LblTxt:
+            id: targt_shape
+            lblTxtIn: 'Loc.'
+
+
+<LblTxt@BoxLayout>:
+    orientation: 'horizontal'
+    lblTxtIn: 'default'
+    theTxt: iAmTxt
+    Label:
+        text: root.lblTxtIn
+    TextInput:
+        id: iAmTxt
+        text: 'txt'
+
+<TargetProperties>:
+    target_type: target_type
+    shape: shape
+    shape_color: shape_color
+    text: text
+    text_color: text_color
+    target_orientation: target_orientation
+    lat: lat
+    lon: lon
+    crop_name: crop_name
+    crop_path: crop_path
+    desc: desc
+
+    BoxLayout:
+        orientation: "vertical"
+        spacing: 10
+
+        BoxLayout:
+            orientation: "vertical"
+            spacing: 10
+            size_hint_y: 1
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: '35dp'
+
+            Label:
+                text: 'Type: '
+                size_hint_x: None
+                width: '100dp'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+
+            ComboEdit:
+                id: target_type
+                size_hint_x: 1
+                on_text: app.updateTargetProps()
+                readonly: True
+                options:
+                    [
+                    Button(text=t, size_hint_y=None, height=30)
+                    for t in [ 'STD', 'QRC', 'OAX', 'EMG' ]
+                    ]
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: '35dp'
+
+            Label:
+                text: 'Shape: '
+                size_hint_x: None
+                width: '100dp'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+
+            ComboEdit:
+                id: shape
+                size_hint_x: 1
+                on_text: app.updateTargetProps()
+                readonly: True
+                options:
+                    [
+                    Button(text=shape, size_hint_y=None, height=30)
+                    for shape in [
+                    'Circle', 'Semicircle', 'Quarter circle', 'Triangle', 'Square',
+                    'Rectangle', 'Trapezoid', 'Pentagon', 'Hexagon', 'Heptagon',
+                    'Octagon', 'Star', 'Cross']
+                    ]
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: '35dp'
+
+            Label:
+                text: 'Shape color: '
+                size_hint_x: None
+                width: '100dp'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+
+            ComboEdit:
+                id: shape_color
+                size_hint_x: 1
+                on_text: app.updateTargetProps()
+                readonly: True
+                options:
+                    [
+                    Button(text=color, size_hint_y=None, height=30)
+                    for color in [
+                    'White', 'Black', 'Gray', 'Red', 'Blue', 'Green', 'Yellow', 'Purple', 'Brown', 'Orange']
+                    ]
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: '35dp'
+
+            Label:
+                text: 'Text: '
+                size_hint_x: None
+                width: '100dp'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+
+            TextInput:
+                id: text
+                text: ''
+                multiline: False
+                readonly: False
+                size_hint_x: 1
+                use_bubble: True
+                font_size: 20
+                on_text: app.updateTargetProps()
+                readonly: True
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: '35dp'
+
+            Label:
+                text: 'Text color: '
+                size_hint_x: None
+                width: '100dp'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+
+            ComboEdit:
+                id: text_color
+                size_hint_x: 1
+                on_text: app.updateTargetProps()
+                readonly: True
+                options:
+                    [
+                    Button(text=color, size_hint_y=None, height=30)
+                    for color in [
+                    'White', 'Black', 'Gray', 'Red', 'Blue', 'Green', 'Yellow', 'Purple', 'Brown', 'Orange']
+                    ]
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: '35dp'
+
+            Label:
+                text: 'Orientation: '
+                size_hint_x: None
+                width: '100dp'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+
+            ComboEdit:
+                id: target_orientation
+                size_hint_x: 1
+                on_text: app.updateTargetProps()
+                readonly: True
+                options:
+                    [
+                    Button(text=orientation, size_hint_y=None, height=30)
+                    for orientation in [
+                    'N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW']
+                    ]
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: '35dp'
+
+            Label:
+                text: 'Description: '
+                size_hint_x: None
+                width: '100dp'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+
+            TextInput:
+                id: desc
+                text: ''
+                multiline: False
+                readonly: False
+                size_hint_x: 1
+                use_bubble: True
+                font_size: 20
+                on_text: app.updateTargetProps()
+                readonly: True
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: '35dp'
+
+            Label:
+                text: 'Latitude: '
+                size_hint_x: None
+                width: '100dp'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+
+            TextInput:
+                id: lat
+                text: ''
+                multiline: False
+                readonly: True
+                size_hint_x: 1
+                use_bubble: True
+                font_size: 20
+                on_text: app.updateTargetProps()
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: '35dp'
+
+            Label:
+                text: 'Longitude: '
+                size_hint_x: None
+                width: '100dp'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+
+            TextInput:
+                id: lon
+                text: ''
+                multiline: False
+                readonly: True
+                size_hint_x: 1
+                use_bubble: True
+                font_size: 20
+                on_text: app.updateTargetProps()
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: '35dp'
+
+            Label:
+                text: 'Crop name: '
+                size_hint_x: None
+                width: '100dp'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+
+            TextInput:
+                id: crop_name
+                text: ''
+                multiline: False
+                readonly: True
+                size_hint_x: 1
+                use_bubble: True
+                font_size: 20
+                on_text: app.updateTargetProps()
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: '35dp'
+
+            Label:
+                text: 'Crop path: '
+                size_hint_x: None
+                width: '100dp'
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+
+            TextInput:
+                id: crop_path
+                text: ''
+                multiline: False
+                readonly: True
+                size_hint_x: 1
+                use_bubble: True
+                font_size: 20
+                on_text: app.updateTargetProps()
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: '40dp'
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_x: None
+                width: '100dp'
+
+            Button:
+                text: 'Use selected crop'
+                size_hint_y: None
+                size_hint_x: 1
+                height: '50dp'
+                on_release: app.updateTargetCrop()
+
+
+#
+# Widget for displaying ADLC target detections.
+#
+<TargetsLayout>:
+    crops: sl_crops
+    targets: sl_targets
+    committed_targets: sl_committed
+    image_name: image_name
+    selected_crop: crop_image
+    selected_target: target_image
+    props: props
+
+    BoxLayout:
+        orientation: "vertical"
+        width: 300
+        size_hint_x: None
+        spacing: 10
+
+        #
+        # Tyto Logo
+        #
+        BoxLayout:
+            height: 100
+            size_hint_y: None
+            pos_hint: {"center_x": 0.5}
+
+            RelativeLayout:
+                id: crop_rl
+
+                ScatterStencil:
+                    id: crop_scatter
+                    size_hint: None, None
+                    size: crop_rl.size
+                    do_rotation: False
+                    auto_bring_to_front: False
+
+                    CropImage:
+                        id: crop_image
+                        size: crop_scatter.size
+                        source: resource_filename('AUVSIground', 'resources/athene_logo_transparent.png')
+
+            #Image:
+            #    id: img_crop
+            #    source: resource_filename('AUVSIground', 'resources/athene_logo_transparent.png')
+            #    keep_ratio: True
+
+        TextInput:
+            id: image_name
+            text: "<Current Image>"
+            multiline: False
+            readonly: True
+            size_hint_y: None
+            use_bubble: True
+            height: "40dp"
+            font_size: 20
+            padding: [5, (self.height-self.line_height)/2]
+            background_color: [0, 0, 0, 1]
+            foreground_color: [1, 1, 1, 1]
+
+        #
+        # View of all images
+        #
+        ScrollView:
+            id: sv_crops
+            pos_hint: {"center_x": 0.5}
+            scroll_type: ['bars', 'content']
+            bar_width: '10dp'
+
+            StackLayout:
+                id: sl_crops
+                spacing: 5
+                height: self.minimum_height
+                size_hint_y: None
+
+    BoxLayout:
+        orientation: "vertical"
+
+        TargetProperties:
+            id: props
+
+        #
+        # View of committed targets
+        #
+        ScrollView:
+            id: sv_committed
+
+            size_hint_y: None
+            pos_hint: {"center_y": 0.5}
+            scroll_type: ['bars', 'content']
+            bar_width: '10dp'
+
+            StackLayout:
+                id: sl_committed
+                orientation: 'tb-lr'
+                spacing: 5
+                width: self.minimum_width
+                size_hint_x: None
+
+    BoxLayout:
+        orientation: "vertical"
+        width: 300
+        size_hint_x: None
+        spacing: 10
+
+        #
+        # Tyto Logo
+        #
+        BoxLayout:
+            height: 100
+            size_hint_y: None
+            pos_hint: {"center_x": 0.5}
+
+            RelativeLayout:
+                id: target_rl
+
+                ScatterStencil:
+                    id: target_scatter
+                    size_hint: None, None
+                    size: target_rl.size
+                    do_rotation: False
+                    auto_bring_to_front: False
+
+                    CropImage:
+                        id: target_image
+                        size: target_scatter.size
+                        source: resource_filename('AUVSIground', 'resources/athene_logo_transparent.png')
+
+            #Image:
+            #    source: resource_filename('AUVSIground', 'resources/athene_logo_transparent.png')
+            #    keep_ratio: True
+
+        #
+        # View of detected targets
+        #
+        ScrollView:
+            id: sv_targets
+            pos_hint: {"center_x": 0.5}
+            scroll_type: ['bars', 'content']
+            bar_width: '10dp'
+            size_hint_x: 1
+
+            StackLayout:
+                id: sl_targets
+                spacing: 5
+                height: self.minimum_height
+                size_hint_y: None
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 50
+
+            Button:
+                text: 'New target'
+                on_release: app.newTarget()
+
+            Button:
+                text: 'Commit'
+                on_release: app.commitTarget()

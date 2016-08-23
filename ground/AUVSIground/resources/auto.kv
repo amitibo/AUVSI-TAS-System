@@ -1,0 +1,311 @@
+#: import ListItemButton kivy.uix.listview.ListItemButton
+#: import ListAdapter kivy.adapters.listadapter.ListAdapter
+#: import resource_filename pkg_resources.resource_filename
+
+ADLCGui:
+
+#
+# Main GUI window.
+#
+<ADLCGui>:
+    orientation: "vertical"
+    connect_label: connect_label_id
+    adlc: adlc
+    images: adlc.images
+    targets: adlc.targets
+
+    #
+    # Top buttons menu
+    #
+    BoxLayout:
+        height: "20dp"
+        width: "600dp"
+        size_hint: None, None
+        pos_hint: {"right": 1}
+
+        BGLabel:
+            id: connect_label_id
+            text: 'Disconnected'
+
+        Button:
+            text: 'Settings'
+            on_release: app.open_settings()
+
+    ADLCLayout:
+        id: adlc
+
+
+#
+# A label class with bg color
+#
+<BGLabel>:
+    canvas.before:
+        Color:
+            rgb: 1, 0, 0
+
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+
+#
+# Target
+#
+<Target>:
+    height: 400
+    size_hint_y: None
+    pos_hint: {"center_x": 0.5}
+    orientation: 'vertical'
+    target_image: target_image
+    targt_shape: targt_shape
+    bg_color: bg_color
+    orient: orient
+    char: char
+    char_color: char_color
+    latitude: latitude
+    latitude_deg: latitude_deg
+    longitude: longitude
+    longitude_deg: longitude_deg
+    
+    Image:
+        size_hint_y: 1
+        id: target_image
+        keep_ratio: True
+
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint_y: 1.5
+
+        LblTxt:
+            id: targt_shape
+            lblTxtIn: 'Shape'
+
+        LblTxt:
+            id: bg_color
+            lblTxtIn: 'BG color'
+
+        LblTxt:
+            id: orient
+            lblTxtIn: 'Orient.'
+
+        LblTxt:
+            id: char
+            lblTxtIn: 'Alpha'
+
+        LblTxt:
+            id: char_color
+            lblTxtIn: 'Alpha color'
+
+        LblTxt:
+            id: latitude
+            lblTxtIn: 'Lat.'
+
+        LblTxt:
+            id: latitude_deg
+            lblTxtIn: 'Lat. Deg.'
+
+        LblTxt:
+            id: longitude
+            lblTxtIn: 'Lon.'
+
+        LblTxt:
+            id: longitude_deg
+            lblTxtIn: 'Lon. Deg.'
+
+
+<LblTxt@BoxLayout>:
+    orientation: 'horizontal'
+    lblTxtIn: 'default'
+    theTxt: iAmTxt
+    height: "20dp"
+
+    Label:
+        text: root.lblTxtIn
+    
+    TextInput:
+        id: iAmTxt
+        text: ''
+        multiline: False
+        readonly: True
+        use_bubble: True
+
+
+<AutoImage>
+
+<AutoPanel>:
+    orientation: 'vertical'
+    image: image
+    
+    text: ''
+    
+    Label:
+        id: title
+        text: self.parent.text
+        size_hint_y: 0.07
+        font_size: 20
+
+    AutoImage:
+        id: image
+        source: resource_filename('AUVSIground', 'resources/athene_logo_transparent.png')
+        keep_ratio: True
+
+
+#
+# Image analysis window
+#
+<AnalysisWin>:
+    panel_orig: panel_orig
+    panel_mser: panel_mser
+    panel_shape: panel_shape
+    panel_letter: panel_letter
+    spacing: 5
+    
+    AutoPanel:
+        id: panel_orig
+        text: 'Original Image'
+
+    AutoPanel:
+        id: panel_mser
+        text: 'Blob Detection'
+        crop_color: (1, 0, 0)
+        
+    AutoPanel:
+        id: panel_shape
+        text: 'Shape Classification'
+        crop_color: (1, 1, 0)
+
+    AutoPanel:
+        id: panel_letter
+        text: 'Letter Classification'
+        crop_color: (0, 0, 1)
+
+
+#
+# Widget for displaying ADLC target detections.
+#
+<ADLCLayout>:
+    image_name: image_name
+    analysis_win: analysis_win
+    sl_images: sl_images
+    sv_images: sv_images
+    sl_targets: sl_targets
+    sv_targets: sv_targets
+    sl_current_targets: sl_current_targets
+    live_btn: live_btn
+    
+    BoxLayout:
+        orientation: "vertical"
+        width: 220
+        size_hint_x: None
+        spacing: 10
+
+        #
+        # Tyto Logo
+        #
+        BoxLayout:
+            height: 100
+            size_hint_y: None
+            pos_hint: {"center_x": 0.5}
+
+            Image:
+                source: resource_filename('AUVSIground', 'resources/athene_logo_transparent.png')
+                keep_ratio: True
+
+        TextInput:
+            id: image_name
+            text: "<Current Image>"
+            multiline: False
+            readonly: True
+            size_hint_y: None
+            use_bubble: True
+            height: "40dp"
+            font_size: 12
+            padding: [5, (self.height-self.line_height)/2]
+            background_color: [0, 0, 0, 1]
+            foreground_color: [1, 1, 1, 1]
+
+        #
+        # View of all images
+        #
+        ScrollView:
+            id: sv_images
+            pos_hint: {"center_x": 0.5}
+            scroll_type: ['bars', 'content']
+            bar_width: '10dp'
+
+            StackLayout:
+                id: sl_images
+                spacing: 5
+                height: self.minimum_height
+                size_hint_y: None
+
+        #
+        # Liveview button
+        #
+        BoxLayout:
+            orientation: "horizontal"
+            height: "20dp"
+            size_hint_y: None
+
+            ToggleButton:
+                id: live_btn
+                text: 'Live update'
+                #state: 'down'
+
+    BoxLayout:
+        orientation: "vertical"
+
+        AnalysisWin:
+            id: analysis_win
+            cols: 2
+
+    BoxLayout:
+        orientation: "vertical"
+        width: 300
+        size_hint_x: None
+        spacing: 10
+        padding: 10
+        
+        Label:
+            text: "Image Targets"
+            size_hint_y: 0.05
+            font_size: 20
+
+        #
+        # View of detected targets in current image.
+        #
+        ScrollView:
+            id: sv_current_targets
+            pos_hint: {"center_x": 0.5}
+            scroll_type: ['bars', 'content']
+            bar_width: '10dp'
+            size_hint_x: 1
+            size_hint_y: 0.7
+
+            StackLayout:
+                id: sl_current_targets
+                spacing: 5
+                height: self.minimum_height
+                size_hint_y: None
+
+        #
+        # View of Final Targets..
+        #
+        Label:
+            text: "ADLC Targets"
+            size_hint_y: 0.05
+            font_size: 20
+
+        ScrollView:
+            id: sv_targets
+            pos_hint: {"center_x": 0.5}
+            size_hint_y: 0.2
+            scroll_type: ['bars', 'content']
+            bar_width: '10dp'
+            height: 40
+
+            StackLayout:
+                id: sl_targets
+                spacing: 5
+                size_hint_y: None
+

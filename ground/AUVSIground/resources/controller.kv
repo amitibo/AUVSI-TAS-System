@@ -1,0 +1,72 @@
+#: import ListItemButton kivy.uix.listview.ListItemButton
+#: import ListAdapter kivy.adapters.listadapter.ListAdapter
+#: import resource_filename pkg_resources.resource_filename
+
+ControllerGui:
+
+#
+# Main GUI window.
+#
+<ControllerGui>:
+    orientation: "vertical"
+    connect_label: connect_label_id
+
+    #
+    # Top buttons menu
+    #
+    BoxLayout:
+        height: "20dp"
+        width: "750dp"
+        size_hint: None, None
+        pos_hint: {"right": 1}
+
+        BGLabel:
+            id: connect_label_id
+            text: 'Disconnected'
+
+        Button:
+            text: 'Settings'
+            on_release: app.open_settings()
+
+    BoxLayout:
+        BoxLayout:
+            orientation: "vertical"
+            width: 430
+            size_hint_x: None
+            spacing: 10
+
+            #
+            # Tyto Logo
+            #
+            BoxLayout:
+                height: 100
+                size_hint_y: None
+                pos_hint: {"center_x": 0.5}
+
+                Image:
+                    source: resource_filename('AUVSIground', 'resources/athene_logo_transparent.png')
+                    keep_ratio: True
+
+            BoxLayout:
+                
+
+        #
+        # Image analysis window
+        #
+        BoxLayout:
+            Image:
+                source: resource_filename('AUVSIground', 'resources/ATHENE.jpg')
+                keep_ratio: True
+
+
+#
+# A label class with bg color
+#
+<BGLabel>:
+    canvas.before:
+        Color:
+            rgb: 1, 0, 0
+
+        Rectangle:
+            pos: self.pos
+            size: self.size

@@ -1,0 +1,137 @@
+#: import resource_filename pkg_resources.resource_filename
+
+MapGui:
+
+<Map>:
+
+<MapGui>:
+    orientation: "vertical"
+    map_widget: map_widget
+    tc_degrees: tc_degrees
+    tc_fp: tc_fp
+    search_area: search_area
+    search_path: search_path
+    flight_boundary: flight_boundary
+    grid: grid
+    points_gps: points_gps
+    obstacles: obstacles
+    
+    #
+    # Top buttons menu
+    #
+
+    BoxLayout:
+        height: "20dp"
+        width: "600dp"
+        size_hint: None, None
+        pos_hint: {"right": 1}
+
+        Button:
+            text: 'Update'
+            on_release: app.update()
+
+        Button:
+            text: 'Reset'
+            on_release:
+                map_widget.scale = 1
+                map_widget.pos = 0, 0
+
+        Button:
+            text: 'Settings'
+            on_release: app.open_settings()
+    
+    TextInput:
+        id: tc_degrees
+        text: "<Last Target Coords>"
+        multiline: False
+        readonly: True
+        size_hint_y: None
+        use_bubble: True
+        height: "40dp"
+        width: "200dp"
+        font_size: 20
+        padding: [5, (self.height-self.line_height)/2]
+
+    TextInput:
+        id: tc_fp
+        text: "<Last Target Coords>"
+        multiline: False
+        readonly: True
+        size_hint_y: None
+        use_bubble: True
+        height: "40dp"
+        width: "200dp"
+        font_size: 20
+        padding: [5, (self.height-self.line_height)/2]
+
+
+
+    BoxLayout:
+        orientation: "horizontal"
+        BoxStencil:
+
+            RelativeLayout:
+                id: rl
+
+                Map:
+                    id: map_widget
+                    size_hint: None, None
+                    size: rl.size
+                    do_rotation: False
+                    auto_bring_to_front: False
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_x: 0.1
+
+            ToggleButton:
+                id: flight_boundary
+                text: 'Flight Boundary'
+                width: 200
+                state: 'down'
+                on_state: app.press_button('flight_boundary',self.state == 'down')
+
+            ToggleButton:
+                id: search_area
+                text: 'Search Area'
+                width: 200
+                state: 'down'
+                on_state: app.press_button('search_area',self.state == 'down')
+
+            ToggleButton:
+                id: search_path
+                text: 'Search Path'
+                width: 200
+                state: 'down'
+                on_state: app.press_button('search_path',self.state == 'down')
+
+            ToggleButton:
+                text: 'Targets'
+                state: 'down'
+                width: 200
+                on_state: app.press_button('Targets',self.state == 'down')
+
+            ToggleButton:
+                id: grid
+                text: 'Grid'
+                width: 200
+                state: 'down'
+                on_state: app.press_button('grid',self.state == 'down')
+
+            ToggleButton:
+                id: points_gps
+                text: 'GPS Flight points'
+                width: 200
+                state: 'down'
+                on_state: app.press_button('points_gps',self.state == 'down')
+
+            ToggleButton:
+                id: obstacles
+                text: 'Obstacles'
+                width: 200
+                state: 'down'
+                on_state: app.press_button('obstacles',self.state == 'down')
+
+
+    
+

@@ -1,0 +1,21 @@
+# interfaces(5) file used by ifup(8) and ifdown(8)
+auto lo
+iface lo inet loopback
+
+### All lines from here ####
+#auto eth0
+#iface eth0 inet dhcp
+#address 192.168.1.13
+#dns-nameservers 192.168.1.254 8.8.8.8
+### to here, should be commented with a '#' at the start of the line. ###
+
+### All lines from here ####
+auto eth0
+iface eth0 inet static
+    address 192.168.1.12
+    netmask 255.255.255.0
+    broadcast 192.168.1.255
+    gateway 192.168.1.12
+### to here, should be un-commented (erase the # at the beggining) ###
+
+#network 192.168.1.0
