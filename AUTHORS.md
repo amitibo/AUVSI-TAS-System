@@ -1,13 +1,7 @@
-.. -*- mode: rst -*-
-
-
-People
-------
+# People
 
 The following people have been core contributors to AUVSI TAS payload
 system:
-
-.. hlist::
 
   * Amit Aides
   * Roni Forte
