@@ -1,0 +1,8 @@
+.Python
+*.egg-info/
+.installed.cfg
+*.egg
+pip-log.txt
+.venv/
+*.pyc
+*.ini

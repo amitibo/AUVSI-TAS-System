@@ -1,8 +1,4 @@
-from .targets import *
-from .images import *
-from .utils import *
+from AUVSIcv.targets import *
+from AUVSIcv.images import *
+from AUVSIcv.utils import *
 import transformation_matrices as transofrms
-import MSER
-from .classifier import SVM
-import KMEANS
-import OCR
