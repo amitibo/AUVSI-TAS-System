@@ -1,5 +1,9 @@
-Copyright (c) 2015 the authors (see AUTHORS file).
-Copyright (c) 2015 the authors (see AUTHORS file).
+Copyright (c) 2016 the authors (see AUTHORS file).
+
+This package contains the file `NED.py` by `narcis`. The file is taken from:
+https://bitbucket.org/udg_cirs/cola2_core
+No license is stated for this file. The license below doesn't apply for this
+file.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
