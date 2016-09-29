@@ -7,9 +7,11 @@ The sofware was developed and used by the TAS team during the
 [2015](http://www.auvsi-suas.org/competitions/2015/) and 
 [2016](http://www.auvsi-suas.org/competitions/2016/) competitions.
 The software is made of three sub-projects:
-- The software of the airborne computer.
-- The software that runs on the ground station.
-- Image processing algorithms.
+
+  * The software of the airborne computer.
+  * The software that runs on the ground station.
+  * Image processing algorithms.
+
 Both the airborne and ground station software make use of the image processing
 sub-project.
 The software is written completely in python.
@@ -46,7 +48,7 @@ installed:
 * **aggdraw** - Install from source (preferably from svn) set the
   variable FREETYPE_ROOT = "/usr/" in the setup.py file.
 * **PIL**
-* **exifread **- Install with ```pip install exifread```
+* **exifread**- Install with ```pip install exifread```
 * **pyqrcode** - Install with ```pip install pyqrcode```
 * **pypng** - Install with ```pip install pypng```
 
@@ -87,8 +89,7 @@ generating *fake* targets (not included in this distribution due to copyright).
 
 ## How to Use
 
-* Start the ariborne system using one of the script inside
-  ```airborne/scripts```
+* Start the ariborne system using one of the script inside ```airborne/scripts```
 * Start the ground system using the scripts in ```ground/scripts```
 
 ## License
