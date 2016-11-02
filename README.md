@@ -1,3 +1,4 @@
+![The "ATHENE" Drone](imgs/athene.jpg)
 # AUVSI Image Processing Software
 
 The AUVSI Image Procssing Software contains the software developed for the

@@ -1,49 +1,50 @@
-# Simulation Mode
+# Running the Ground System
 
-To run the airborne in simulation mode on single computer:
-```cd <path to project file>\ground\scripts```
+To run the ground system:
 
-    1. activate GUI: ```python start_ground.py```
-    2. activate MAP: ```python start_map.py```
+    > cd <path to project file>\ground\scripts
+    > python start_controller.py
+    > python start_ground.py
+    > python start_map.py
+    > ...
 
-```cd <path to project file>\airborne\scripts```
+To run the airborne system in simulation mode
 
-    1. activate airborne: ```python start_auvsi.py --camera simulation --simulate_pixhawk```
+    > cd <path to project file>\airborne\scripts
+    > python start_auvsi.py --camera simulation --simulate_pixhawk
+    
 
-**Note:** Before running the airborne system you need to setup images and flight
-data:
+**Note:** In order to run the airborne system in simualation mode you will need
+image and flight data from a previous flight.
    
-    1. Create a folder data folder with to subfolders ```resized_images``` and
-       ```flight_data```
-    2. Place images and flight in the respective folders.
-    3. Create an environment variable ```AUVSI_CV_DATA``` pointing to the data
-       folder.
+1. Create a data folder with the subfolders ```resized_images``` and
+   ```flight_data```
+2. Place images and flight data in the respective folders.
+3. Create an environment variable ```AUVSI_CV_DATA``` pointing to the data
+   folder.
          
 ## Settings:
 
 ### In case the complete system is run on the same computer
 
-In GUI > settings >
+In the controller GUI under ````settings``` > ```Network```:
 
-    1. role = primary 
-    2. IP = local host = 127.0.0.1
+    1. IP = 127.0.0.1
 
-In Map > settings >
+In the main GUI under ````settings``` > ```Network```:
 
-    1. role = secondery 
-    2. IP = 127.0.0.1
-    3. IP_PRIMERY = 127.0.0.1
+    1. IP = 127.0.0.1
+    2. role = primary 
+    3. IP_CONTROLLER = 127.0.0.1
 
-### In case the the airborne system is run on a dedicated computer
+In the rest of the GUI's (Target, ADLC, etc):
 
-In GUI > settings >
+    1. IP = 127.0.0.1
+    2. role = secondary 
+    3. IP_CONTROLLER = 127.0.0.1
 
-    1. role = primary
-    2. IP = local host = 192.168.1.101
+### In case the the airborne system is run on a separate (airborne) computer
 
-In Map > settings >
-    
-    1. role = secondery 
-    2. IP = 192.168.1.201
-    3. IP_PRIMERY = 192.168.1.101
-    
+In the ```Settintgs``` > ```Network``` of all GUI's:
+
+    1. IP = <IP of Airborne Computer>
