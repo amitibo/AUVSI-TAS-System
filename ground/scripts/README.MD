@@ -25,11 +25,11 @@ image and flight data from a previous flight.
 
 ### In case the complete system is run on the same computer
 
-In the controller GUI under ````settings``` > ```Network```:
+In the controller GUI under ```settings``` > ```Network```:
 
 1. IP = 127.0.0.1
 
-In the main GUI under ````settings``` > ```Network```:
+In the main GUI under ```settings``` > ```Network```:
 
 1. IP = 127.0.0.1
 2. role = primary 
@@ -45,4 +45,4 @@ In the rest of the GUI's (Target, ADLC, etc):
 
 In the ```Settintgs``` > ```Network``` of all GUI's:
 
-1. IP = <IP of Airborne Computer>
+1. IP = ```IP of Airborne Computer```
